@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carta San Valentín</title>
+
+<style>
+/* ====== FONDO CON IMAGEN ====== */
+body {
+    margin: 0;
+    background: url("fondo.webp") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', 'Georgia', serif;
+}
+
+/* OSCURECER SUAVEMENTE EL FONDO */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: 0;
+}
+
+/* ===== CORAZONES LATIENDO ===== */
+.pulse-heart {
+    position: absolute;
+    font-size: clamp(18px, 4vw, 26px);
+    animation: pulse 1.5s infinite;
+    z-index: 1;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
+/* POSICIONES RELATIVAS */
+.h1 { top: 8%; left: 10%; }
+.h2 { top: 15%; right: 12%; }
+.h3 { bottom: 12%; left: 15%; }
+.h4 { bottom: 18%; right: 10%; }
+.h5 { top: 50%; left: 4%; }
+.h6 { top: 50%; right: 4%; }
+
+/* ===== CONTENEDOR ===== */
+.container {
+    position: relative;
+    width: min(90vw, 360px);
+    height: min(75vh, 320px);
+    z-index: 2;
+}
+
+/* TEXTO FINAL */
+.final {
+    position: absolute;
+    top: -70px;
+    width: 100%;
+    text-align: center;
+    font-size: clamp(20px, 5vw, 26px);
+    color: #ff3366;
+    text-shadow: 0 0 15px pink;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.container.show-final .final {
+    opacity: 1;
+}
+
+/* ===== SOBRE ===== */
+.envelope {
+    position: absolute;
+    width: 100%;
+    height: 65%;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    border: 3px solid #ffb6c1;
+}
+
+/* TAPA */
+.flap {
+    position: absolute;
+    inset: 0;
+    background: #ffe4ec;
+    clip-path: polygon(0 0, 100% 0, 50% 65%);
+    transform-origin: top;
+    transition: transform 1s;
+    z-index: 3;
+}
+
+/* ===== CARTA ===== */
+.letter {
+    position: absolute;
+    width: 90%;
+    height: 85%;
+    background: #fff;
+    top: 8%;
+    left: 5%;
+    padding: 14px;
+    box-sizing: border-box;
+    text-align: center;
+    transform: translateY(120%);
+    transition: transform 1.3s;
+    border-radius: 12px;
+    z-index: 2;
+    overflow-y: auto;
+    border: 2px dashed #ff9eb5;
+}
+
+/* TEXTO */
+.letter h2 {
+    font-size: clamp(18px, 5vw, 22px);
+    color: #ff4d88;
+    margin-bottom: 8px;
+}
+
+.letter p {
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.4;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+/* HELLO KITTY */
+.kitty {
+    font-size: clamp(20px, 6vw, 26px);
+}
+
+/* PREGUNTA */
+.question {
+    font-size: clamp(15px, 4.5vw, 18px);
+    color: #ff3366;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* BOTÓN */
+button {
+    margin-top: 8px;
+    padding: 8px 20px;
+    font-size: clamp(14px, 4vw, 16px);
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ff5fa2, #ff3366);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 18px #ff3366;
+}
+
+/* ===== ANIMACIONES ===== */
+.container.open .flap {
+    transform: rotateX(180deg);
+}
+
+.container.open .letter {
+    transform: translateY(-5%);
+}
+
+/* CORAZONES FLOTANTES */
+.float-heart {
+    position: absolute;
+    font-size: clamp(14px, 4vw, 22px);
+    animation: float 6s linear infinite;
+    z-index: 1;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) scale(0.5);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- CORAZONES LATIENDO -->
+<div class="pulse-heart h1">❤️</div>
+<div class="pulse-heart h2">💗</div>
+<div class="pulse-heart h3">❤️</div>
+<div class="pulse-heart h4">💗</div>
+<div class="pulse-heart h5">💞</div>
+<div class="pulse-heart h6">💖</div>
+
+<div class="container" onclick="openEnvelope()">
+
+    <div class="final">🎀 Gracias por hacer este San Valentín especial 🎀</div>
+
+    <div class="envelope">
+        <div class="flap"></div>
+
+        <div class="letter">
+            <h2>💌 Para ti <span class="kitty">🎀🐱</span></h2>
+
+            <p>Desde que llegaste, todo se siente más bonito.</p>
+            <p>Cada momento contigo se queda como un recuerdo feliz.</p>
+            <p>Me encanta tu forma de ser y cómo haces que sonría.</p>
+
+            <p class="question">
+                Y ahora, con todo mi corazón…
+                <br>¿Quieres ser mi San Valentín? ❤️
+            </p>
+
+            <button onclick="event.stopPropagation(); sayYes()">Sí 💘</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function openEnvelope() {
+    document.querySelector('.container').classList.add('open');
+}
+
+function sayYes() {
+    document.querySelector('.container').classList.add('show-final');
+}
+
+/* CORAZONES FLOTANTES */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "float-heart";
+    heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💗";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+setInterval(createHeart, 350);
+</script>
+
+</body>
+</html>
