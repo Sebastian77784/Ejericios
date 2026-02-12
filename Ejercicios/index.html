@@ -42,7 +42,7 @@ body::before {
     100% { transform: scale(1); }
 }
 
-/* POSICIONES RELATIVAS */
+/* POSICIONES */
 .h1 { top: 8%; left: 10%; }
 .h2 { top: 15%; right: 12%; }
 .h3 { bottom: 12%; left: 15%; }
@@ -121,23 +121,18 @@ body::before {
 /* TEXTO */
 .letter h2 {
     font-size: clamp(18px, 5vw, 22px);
-    color: #ff4d88;
-    margin-bottom: 8px;
+    color: #ff4de1;
 }
 
 .letter p {
     font-size: clamp(14px, 4vw, 16px);
-    line-height: 1.4;
-    margin-bottom: 8px;
     color: #444;
 }
 
-/* HELLO KITTY */
 .kitty {
     font-size: clamp(20px, 6vw, 26px);
 }
 
-/* PREGUNTA */
 .question {
     font-size: clamp(15px, 4.5vw, 18px);
     color: #ff3366;
@@ -145,7 +140,7 @@ body::before {
     margin-top: 8px;
 }
 
-/* BOTÓN */
+/* BOTONES */
 button {
     margin-top: 8px;
     padding: 8px 20px;
@@ -163,7 +158,13 @@ button:hover {
     box-shadow: 0 0 18px #ff3366;
 }
 
-/* ===== ANIMACIONES ===== */
+/* BOTÓN NO */
+#noBtn {
+    position: fixed;
+    z-index: 999;
+}
+
+/* ANIMACIONES */
 .container.open .flap {
     transform: rotateX(180deg);
 }
@@ -181,21 +182,18 @@ button:hover {
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(100vh) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-10vh) scale(0.5);
-        opacity: 0;
-    }
+    0% { transform: translateY(100vh) scale(1); opacity: 1; }
+    100% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- CORAZONES LATIENDO -->
+<audio id="bgMusic" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
 <div class="pulse-heart h1">❤️</div>
 <div class="pulse-heart h2">💗</div>
 <div class="pulse-heart h3">❤️</div>
@@ -213,9 +211,12 @@ button:hover {
         <div class="letter">
             <h2>💌 Para ti <span class="kitty">🎀🐱</span></h2>
 
-            <p>Desde que llegaste, todo se siente más bonito.</p>
-            <p>Cada momento contigo se queda como un recuerdo feliz.</p>
-            <p>Me encanta tu forma de ser y cómo haces que sonría.</p>
+            <p>Amor, ya casi cumplimos dos años juntos, y aunque hemos tenido 
+            nuestras peleas y momentos difíciles, nunca ha cambiado lo que siento 
+            por ti.</p>
+            <p>Te sigo amando como el primer día que empezamos a ser novios, 
+            con la misma emoción y las mismas ganas de estar contigo.</p>
+            <p>Hemos crecido, hemos aprendido, y aun así te elegiría una y mil veces más.</p>
 
             <p class="question">
                 Y ahora, con todo mi corazón…
@@ -223,6 +224,7 @@ button:hover {
             </p>
 
             <button onclick="event.stopPropagation(); sayYes()">Sí 💘</button>
+            <button id="noBtn" onclick="event.stopPropagation(); moveNo()">No 😅</button>
         </div>
     </div>
 </div>
@@ -230,10 +232,25 @@ button:hover {
 <script>
 function openEnvelope() {
     document.querySelector('.container').classList.add('open');
+    document.getElementById("bgMusic").play().catch(()=>{});
 }
 
 function sayYes() {
     document.querySelector('.container').classList.add('show-final');
+}
+
+/* BOTÓN QUE HUYE */
+function moveNo() {
+    const btn = document.getElementById("noBtn");
+
+    const maxX = window.innerWidth - btn.offsetWidth;
+    const maxY = window.innerHeight - btn.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    btn.style.left = randomX + "px";
+    btn.style.top = randomY + "px";
 }
 
 /* CORAZONES FLOTANTES */
